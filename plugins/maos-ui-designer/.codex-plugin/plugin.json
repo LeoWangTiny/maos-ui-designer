@@ -1,0 +1,32 @@
+{
+  "name": "maos-ui-designer",
+  "version": "0.1.0+codex.20260708035344",
+  "description": "AI-friendly product UI design workflow for frontend, SaaS, admin, mobile, CLI/TUI, and Figma work.",
+  "author": {
+    "name": "zxztai",
+    "url": "https://maos.zxztai.com"
+  },
+  "homepage": "https://maos.zxztai.com",
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "MAOS UI Designer",
+    "shortDescription": "Design agent-maintainable product UIs.",
+    "longDescription": "A professional UI design workflow for Codex that clarifies product context, selects AI-friendly frontend frameworks and component libraries by surface and product type, guides design tokens and StyleX/Tailwind/UI-kit choices, and verifies polished app screens across web, SaaS, admin, mobile, CLI/TUI, Figma, and design-system work.",
+    "developerName": "zxztai",
+    "category": "Productivity",
+    "capabilities": [
+      "Product/UI design workflow",
+      "AI-friendly UI architecture",
+      "Frontend framework selection",
+      "Component-library matrix",
+      "Design-system and token guidance",
+      "Responsive and visual QA"
+    ],
+    "defaultPrompt": "Use $maos-ui-designer to clarify the product context, choose an AI-friendly UI framework, and design or review this interface.",
+    "brandColor": "#1677FF",
+    "websiteURL": "https://maos.zxztai.com",
+    "composerIcon": "./assets/maos-logo-mark-transparent.png",
+    "logo": "./assets/maos-logo-mark-transparent.png",
+    "logoDark": "./assets/maos-logo-mark-transparent.png"
+  }
+}
