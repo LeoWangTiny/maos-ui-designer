@@ -1,0 +1,7 @@
+interface:
+  display_name: "MAOS UI Designer"
+  short_description: "Choose agent-maintainable UI frameworks."
+  icon_small: "./assets/maos-logo-mark-transparent.png"
+  icon_large: "./assets/maos-logo-mark-transparent.png"
+  brand_color: "#1677FF"
+  default_prompt: "Use $maos-ui-designer to choose an AI-friendly UI framework and component library by surface and product type, then run a professional design workflow from brief to QA."
