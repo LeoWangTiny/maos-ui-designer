@@ -1,0 +1,20 @@
+{
+  "name": "maos",
+  "interface": {
+    "displayName": "MAOS"
+  },
+  "plugins": [
+    {
+      "name": "maos-ui-designer",
+      "source": {
+        "source": "local",
+        "path": "./plugins/maos-ui-designer"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    }
+  ]
+}
