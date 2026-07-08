@@ -35,6 +35,39 @@ python scripts/evaluate_capability_map.py path\to\response.md --json
 
 See `docs/tests/maos-capability-map-golden-test.md` for the full rubric.
 
+### Latest Evaluation
+
+The full-coverage generated sample is available at:
+
+- `docs/examples/maos-capability-map-full-coverage.md`
+
+Evaluation command:
+
+```powershell
+python scripts/evaluate_capability_map.py docs\examples\maos-capability-map-full-coverage.md --json
+```
+
+Latest result:
+
+```text
+score: 100
+passed: true
+marketplace_grade: true
+missing: []
+```
+
+Dimension scores:
+
+```text
+Clarifying question discipline: 15/15
+Design context axes: 15/15
+AI-friendly framework gate: 20/20
+Capability map completeness: 20/20
+B2B component library judgment: 10/10
+States and operational boundaries: 10/10
+Implementation acceptance checklist: 10/10
+```
+
 ## Developer
 
 - Developer: zxztai
