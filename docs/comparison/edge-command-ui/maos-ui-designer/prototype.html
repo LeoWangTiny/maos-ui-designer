@@ -3,401 +3,744 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>MAOS UI Designer - Edge Command Console</title>
+  <title>MAOS UI Designer - Edge Command Workbench</title>
   <style>
     :root {
-      --surface: #f5f7fb;
-      --surface-raised: #ffffff;
-      --surface-strong: #101828;
+      --space-1: 4px;
+      --space-2: 8px;
+      --space-3: 12px;
+      --space-4: 16px;
+      --space-5: 20px;
+      --space-6: 24px;
+      --radius-control: 6px;
+      --radius-panel: 8px;
+      --rail-width: 220px;
       --border: #d8e0eb;
-      --text: #172033;
-      --muted: #667085;
+      --border-strong: #c7d2e2;
+      --bg: #f4f6fa;
+      --panel: #ffffff;
+      --panel-soft: #f8fafc;
+      --text: #142033;
+      --muted: #62708a;
       --accent: #1677ff;
       --success: #16803c;
-      --warning: #b35c00;
+      --warning: #a95b00;
       --danger: #c5342b;
-      --stale: #8a5a00;
-      --disconnected: #4b5563;
       --audit: #5940a8;
-      --shadow: 0 10px 28px rgba(16, 24, 40, .08);
+      --shadow: 0 8px 22px rgba(16, 24, 40, .07);
       font-family: Inter, Segoe UI, Arial, sans-serif;
     }
+
     * { box-sizing: border-box; }
-    body { margin: 0; background: var(--surface); color: var(--text); }
+    html, body { width: 100%; max-width: 100%; overflow-x: hidden; }
+    body { margin: 0; background: var(--bg); color: var(--text); }
+    button, input, select { font: inherit; }
+
     .app {
+      width: 100%;
       min-height: 100vh;
       display: grid;
-      grid-template-columns: 232px minmax(0, 1fr);
+      grid-template-columns: var(--rail-width) minmax(0, 1fr);
     }
+
     .rail {
-      background: var(--surface-strong);
-      color: #d8e4f8;
-      padding: 18px 14px;
+      min-width: 0;
+      background: #111827;
+      color: #dbe7f6;
+      padding: var(--space-5) var(--space-4);
       display: flex;
       flex-direction: column;
-      gap: 18px;
+      gap: var(--space-5);
     }
+
     .brand {
-      display: flex;
+      min-height: 40px;
+      display: grid;
+      grid-template-columns: 32px minmax(0, 1fr);
+      gap: var(--space-3);
       align-items: center;
-      gap: 10px;
-      padding: 8px 10px;
-      font-size: 16px;
-      font-weight: 780;
+      font-weight: 800;
+      line-height: 1.25;
     }
+
     .mark {
-      width: 28px;
-      height: 28px;
+      width: 30px;
+      height: 30px;
       border-radius: 8px;
       background: linear-gradient(135deg, #1677ff, #22c7a9);
     }
-    .nav { display: grid; gap: 4px; }
+
+    .nav {
+      display: grid;
+      gap: var(--space-1);
+    }
+
     .nav a {
-      color: #b8c7de;
+      color: #bdd0ea;
       text-decoration: none;
-      padding: 10px 12px;
-      border-radius: 8px;
+      min-height: 38px;
+      display: flex;
+      align-items: center;
+      padding: 0 var(--space-3);
+      border-radius: var(--radius-control);
       font-size: 14px;
     }
-    .nav a.active { background: rgba(255,255,255,.12); color: #fff; }
+
+    .nav a.active {
+      color: #ffffff;
+      background: rgba(255,255,255,.12);
+    }
+
     .role-card {
       margin-top: auto;
       border: 1px solid rgba(255,255,255,.16);
-      border-radius: 10px;
-      padding: 12px;
+      border-radius: var(--radius-panel);
+      padding: var(--space-3);
       font-size: 12px;
-      color: #d8e4f8;
+      line-height: 1.45;
+      color: #dbe7f6;
     }
-    .main { min-width: 0; padding: 18px; }
-    .topbar {
+
+    .main-shell {
+      width: 100%;
+      min-width: 0;
+      padding: var(--space-5);
+    }
+
+    .page-frame {
+      width: 100%;
+      max-width: 1280px;
+      margin: 0 auto;
       display: grid;
-      grid-template-columns: minmax(0, 1fr) auto auto;
-      gap: 12px;
-      align-items: center;
-      margin-bottom: 14px;
+      gap: var(--space-4);
     }
-    .title h1 { margin: 0; font-size: 22px; letter-spacing: 0; }
-    .title p { margin: 4px 0 0; color: var(--muted); font-size: 13px; }
-    .search, .select {
+
+    .topbar {
+      min-width: 0;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(220px, 280px) auto;
+      gap: var(--space-3);
+      align-items: end;
+    }
+
+    .title h1 {
+      margin: 0;
+      font-size: clamp(20px, 2vw, 24px);
+      line-height: 1.2;
+      letter-spacing: 0;
+    }
+
+    .title p {
+      margin: var(--space-1) 0 0;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.4;
+      overflow-wrap: break-word;
+    }
+
+    .field,
+    .safety-banner,
+    .btn {
+      border-radius: var(--radius-control);
+      min-height: 36px;
       border: 1px solid var(--border);
-      border-radius: 8px;
-      background: var(--surface-raised);
-      padding: 9px 11px;
-      color: var(--text);
-      min-height: 38px;
+      background: var(--panel);
     }
-    .safety {
+
+    .field {
+      width: 100%;
+      min-width: 0;
+      padding: 0 var(--space-3);
+      color: var(--text);
+    }
+
+    .safety-banner {
       display: flex;
       align-items: center;
-      gap: 8px;
-      border: 1px solid #ffd6a7;
+      justify-content: center;
+      padding: 0 var(--space-3);
+      border-color: #ffd39b;
       background: #fff7ed;
-      color: #8a3f00;
-      padding: 9px 11px;
-      border-radius: 8px;
+      color: #844100;
       font-size: 13px;
-      font-weight: 700;
+      font-weight: 760;
+      white-space: nowrap;
     }
-    .posture {
+
+    .summary-grid {
       display: grid;
-      grid-template-columns: repeat(6, minmax(0, 1fr));
-      gap: 10px;
-      margin-bottom: 14px;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: var(--space-3);
     }
-    .metric, .panel, .drawer {
-      background: var(--surface-raised);
+
+    .metric,
+    .module,
+    .context-panel {
+      background: var(--panel);
       border: 1px solid var(--border);
-      border-radius: 8px;
+      border-radius: var(--radius-panel);
       box-shadow: var(--shadow);
     }
-    .metric { padding: 12px; min-height: 90px; }
-    .metric .label { color: var(--muted); font-size: 12px; }
-    .metric .value { font-size: 24px; font-weight: 800; margin-top: 8px; }
-    .metric .hint { margin-top: 6px; font-size: 12px; color: var(--muted); }
-    .workspace {
+
+    .metric {
+      min-height: 96px;
       display: grid;
-      grid-template-columns: minmax(560px, 1.35fr) minmax(360px, .85fr);
-      gap: 14px;
+      align-content: start;
+      gap: var(--space-2);
+      padding: var(--space-4);
+    }
+
+    .metric .label {
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.3;
+    }
+
+    .metric .value {
+      font-size: 25px;
+      line-height: 1;
+      font-weight: 820;
+    }
+
+    .metric .hint {
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.3;
+    }
+
+    .workbench-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(340px, 380px);
+      gap: var(--space-4);
       align-items: start;
     }
-    .panel { padding: 14px; }
-    .panel-header {
-      display: flex;
-      justify-content: space-between;
-      gap: 12px;
-      align-items: center;
-      margin-bottom: 12px;
+
+    .primary-stack,
+    .context-stack {
+      min-width: 0;
+      display: grid;
+      gap: var(--space-4);
     }
-    h2 { font-size: 15px; margin: 0; letter-spacing: 0; }
-    .tools { display: flex; flex-wrap: wrap; gap: 8px; }
-    .chip, .tag {
+
+    .module,
+    .context-panel {
+      min-width: 0;
+      padding: var(--space-4);
+    }
+
+    .section-head {
+      min-height: 42px;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: var(--space-3);
+      align-items: center;
+      margin-bottom: var(--space-3);
+    }
+
+    .section-head h2,
+    .section-head h3 {
+      margin: 0;
+      font-size: 15px;
+      line-height: 1.3;
+      letter-spacing: 0;
+    }
+
+    .section-head p {
+      margin: var(--space-1) 0 0;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.35;
+    }
+
+    .toolbar,
+    .action-row,
+    .status-row {
+      min-width: 0;
+      display: flex;
+      gap: var(--space-2);
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .chip,
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      max-width: 100%;
+      min-height: 26px;
+      padding: 0 var(--space-2);
       border-radius: 999px;
       border: 1px solid var(--border);
       background: #f8fafc;
-      padding: 5px 8px;
-      font-size: 12px;
       color: var(--muted);
+      font-size: 12px;
+      line-height: 1;
       white-space: nowrap;
     }
+
     .tag.success { border-color: #bce7c6; background: #effaf2; color: var(--success); }
     .tag.warning { border-color: #ffd6a7; background: #fff7ed; color: var(--warning); }
     .tag.danger { border-color: #ffc9c4; background: #fff1f0; color: var(--danger); }
     .tag.audit { border-color: #d7ceff; background: #f3f0ff; color: var(--audit); }
-    .tag.stale { border-color: #ffe2a7; background: #fff9e7; color: var(--stale); }
-    .layout-main {
-      display: grid;
-      grid-template-columns: minmax(0, 1fr);
-      gap: 14px;
-    }
-    table { width: 100%; border-collapse: collapse; table-layout: fixed; }
-    th, td { border-bottom: 1px solid var(--border); padding: 10px 8px; text-align: left; font-size: 13px; vertical-align: top; }
-    th { color: var(--muted); font-size: 11px; text-transform: uppercase; letter-spacing: .04em; background: #f8fafc; }
-    td strong { display: block; margin-bottom: 2px; }
-    .sub { color: var(--muted); font-size: 12px; }
-    .row-actions { display: flex; gap: 6px; flex-wrap: wrap; }
+    .tag.active { border-color: #b8d8ff; background: #eef6ff; color: #0b60c8; }
+
     .btn {
-      border: 1px solid var(--border);
-      background: var(--surface-raised);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-2);
+      padding: 0 var(--space-3);
       color: var(--text);
-      border-radius: 7px;
-      padding: 7px 9px;
       font-size: 12px;
-      font-weight: 700;
+      font-weight: 760;
+      white-space: nowrap;
     }
-    .btn.primary { background: var(--accent); border-color: var(--accent); color: white; }
-    .btn.danger { border-color: #ffc9c4; color: var(--danger); background: #fff1f0; }
-    .health-grid {
+
+    .btn.primary {
+      border-color: var(--accent);
+      background: var(--accent);
+      color: #ffffff;
+    }
+
+    .btn.danger {
+      border-color: #ffc9c4;
+      background: #fff1f0;
+      color: var(--danger);
+    }
+
+    .table-scroll {
+      width: 100%;
+      max-width: 100%;
+      overflow-x: hidden;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-panel);
+      background: var(--panel);
+    }
+
+    table {
+      width: 100%;
+      min-width: 0;
+      border-collapse: collapse;
+      table-layout: fixed;
+    }
+
+    th,
+    td {
+      border-bottom: 1px solid var(--border);
+      padding: 11px var(--space-3);
+      text-align: left;
+      vertical-align: top;
+      font-size: 13px;
+      line-height: 1.35;
+    }
+
+    th {
+      color: var(--muted);
+      background: var(--panel-soft);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: .04em;
+    }
+
+    tbody tr:last-child td { border-bottom: 0; }
+    tbody tr.selected { background: #f2f7ff; box-shadow: inset 3px 0 0 var(--accent); }
+    td strong { display: block; margin-bottom: var(--space-1); }
+    .sub { color: var(--muted); font-size: 12px; line-height: 1.4; overflow-wrap: break-word; }
+
+    .node-grid {
       display: grid;
       grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 8px;
+      gap: var(--space-3);
     }
-    .node {
+
+    .node-card {
+      min-height: 86px;
+      display: grid;
+      gap: var(--space-2);
+      align-content: start;
       border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 10px;
-      min-height: 82px;
-      background: #fbfdff;
+      border-radius: var(--radius-panel);
+      background: var(--panel-soft);
+      padding: var(--space-3);
     }
-    .node strong { display: block; font-size: 13px; }
-    .timeline { display: grid; gap: 10px; }
-    .event {
-      border-left: 3px solid var(--accent);
-      padding-left: 10px;
-      min-height: 48px;
-    }
-    .event.warning { border-color: var(--warning); }
-    .event.danger { border-color: var(--danger); }
-    .event.audit { border-color: var(--audit); }
-    .evidence {
+
+    .selected-summary {
       display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 8px;
-      margin-top: 12px;
+      gap: var(--space-3);
+      padding-bottom: var(--space-4);
+      border-bottom: 1px solid var(--border);
+      margin-bottom: var(--space-4);
     }
-    .evidence-item {
-      border: 1px dashed var(--border);
-      border-radius: 8px;
-      padding: 10px;
-      background: #fbfdff;
-      min-height: 68px;
-    }
-    .drawer {
-      position: sticky;
-      top: 18px;
-      padding: 14px;
-    }
-    .checklist { display: grid; gap: 8px; margin: 12px 0; }
-    .check {
+
+    .selected-title {
+      min-width: 0;
       display: grid;
-      grid-template-columns: 22px minmax(0, 1fr) auto;
-      gap: 8px;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: var(--space-3);
       align-items: start;
-      padding: 9px;
+    }
+
+    .selected-title h2 {
+      margin: 0;
+      font-size: 16px;
+      line-height: 1.3;
+    }
+
+    .detail-list,
+    .checklist,
+    .timeline {
+      display: grid;
+      gap: var(--space-2);
+    }
+
+    .detail-item,
+    .check-item,
+    .timeline-item {
+      min-height: 52px;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: var(--space-3);
+      align-items: start;
       border: 1px solid var(--border);
-      border-radius: 8px;
+      border-radius: var(--radius-panel);
+      background: var(--panel-soft);
+      padding: var(--space-3);
+    }
+
+    .timeline-item {
+      grid-template-columns: 68px minmax(0, 1fr);
+      border-left: 3px solid var(--accent);
+    }
+
+    .timeline-item.danger { border-left-color: var(--danger); }
+    .timeline-item.warning { border-left-color: var(--warning); }
+    .timeline-item.audit { border-left-color: var(--audit); }
+
+    .context-group {
+      display: grid;
+      gap: var(--space-3);
+      padding-top: var(--space-4);
+      border-top: 1px solid var(--border);
+      margin-top: var(--space-4);
+    }
+
+    .context-group:first-of-type {
+      padding-top: 0;
+      border-top: 0;
+      margin-top: 0;
+    }
+
+    .quality-strip {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: var(--space-2);
+    }
+
+    .quality-item {
+      min-height: 52px;
+      border: 1px dashed var(--border-strong);
+      border-radius: var(--radius-control);
+      padding: var(--space-2);
       background: #fbfdff;
-      font-size: 13px;
+      font-size: 12px;
+      line-height: 1.35;
     }
-    .dot {
-      width: 10px;
-      height: 10px;
-      border-radius: 50%;
-      margin-top: 4px;
-      background: var(--success);
-    }
-    .dot.warn { background: var(--warning); }
-    .dot.danger { background: var(--danger); }
-    .states {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-      margin-top: 10px;
-    }
-    [data-state="permission-limited"] { outline: 2px solid rgba(179, 92, 0, .18); }
-    @media (max-width: 1180px) {
-      .posture { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-      .workspace { grid-template-columns: 1fr; }
-      .drawer { position: static; }
-    }
-    @media (max-width: 760px) {
+
+    @media (max-width: 1100px) {
       .app { grid-template-columns: 1fr; }
+      .rail {
+        position: sticky;
+        top: 0;
+        z-index: 3;
+        padding: var(--space-3) var(--space-4);
+        flex-direction: row;
+        align-items: center;
+        overflow-x: auto;
+      }
+      .brand { min-width: 180px; }
+      .nav { display: flex; flex-wrap: nowrap; }
+      .nav a { white-space: nowrap; }
+      .role-card { display: none; }
+      .summary-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .workbench-grid { grid-template-columns: 1fr; }
+      .context-panel { position: static; }
+      .quality-strip { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    }
+
+    @media (max-width: 720px) {
       .rail { display: none; }
-      .main { padding: 12px; }
-      .topbar { grid-template-columns: 1fr; }
-      .posture { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-      .workspace { display: block; }
-      .panel, .drawer { margin-bottom: 12px; box-shadow: none; }
-      .health-grid, .evidence { grid-template-columns: 1fr; }
-      table { min-width: 680px; }
+      .main-shell { padding: var(--space-3); }
+      .page-frame { gap: var(--space-3); }
+      .topbar { grid-template-columns: 1fr; align-items: stretch; }
+      .safety-banner { justify-content: flex-start; white-space: normal; min-height: 40px; }
+      .summary-grid { grid-template-columns: 1fr; }
+      .workbench-grid { display: flex; flex-direction: column; gap: var(--space-3); }
+      .context-panel { order: -1; }
+      .section-head,
+      .selected-title,
+      .detail-item,
+      .check-item { grid-template-columns: 1fr; }
+      .node-grid,
+      .quality-strip { grid-template-columns: 1fr; }
+      .toolbar,
+      .action-row { align-items: stretch; }
+      .btn { flex: 1 1 auto; min-width: 0; }
       .table-scroll { overflow-x: auto; }
-      .metric .value { font-size: 20px; }
+      table { min-width: 660px; }
     }
   </style>
 </head>
 <body>
-  <div class="app" data-eval-artifact="maos-ui-designer" data-design-context="industrial-iot command-center responsive-web high-risk" data-ai-friendly="semantic tokens domain wrappers rowKey data-testid accessibility stylex ant-design">
+  <div
+    class="app"
+    data-eval-artifact="maos-ui-designer"
+    data-layout="command-workbench"
+    data-responsive-strategy="desktop-rail tablet-stack mobile-task-first"
+    data-selected-mission="M-482"
+    data-design-context="industrial-iot command-center responsive-web high-risk"
+    data-ai-friendly="semantic tokens domain wrappers rowKey data-testid accessibility stylex ant-design"
+  >
     <aside class="rail" aria-label="Command navigation">
-      <div class="brand"><span class="mark"></span><span>MAOS Edge Command</span></div>
+      <div class="brand">
+        <span class="mark"></span>
+        <span>MAOS Edge Command</span>
+      </div>
       <nav class="nav" aria-label="Primary">
         <a class="active" href="#overview">Command Center</a>
         <a href="#missions">Missions</a>
         <a href="#alerts">Alert Triage</a>
-        <a href="#commands">Command Approval</a>
-        <a href="#evidence">Evidence</a>
+        <a href="#commands">Approvals</a>
         <a href="#audit">Audit Replay</a>
       </nav>
       <div class="role-card">
-        <strong>Role: Operations Commander</strong>
-        <p>Two-person approval required for high-risk dispatch.</p>
+        <strong>Operations Commander</strong>
+        <div>High-risk dispatch requires two-person approval and receipt audit.</div>
       </div>
     </aside>
 
-    <main class="main" id="overview">
-      <header class="topbar">
-        <div class="title">
-          <h1>Command Center Overview</h1>
-          <p>Fleet posture, alert triage, and command approval for East Sector Edge Ring.</p>
-        </div>
-        <input class="search" aria-label="Global search" value="Search missions, nodes, alerts">
-        <div class="safety" data-testid="command-safety-banner">Command Safety: approval gate active</div>
-      </header>
+    <main class="main-shell" id="overview">
+      <div class="page-frame">
+        <header class="topbar">
+          <div class="title">
+            <h1>Command Center Workbench</h1>
+            <p>M-482 review path links evidence, node health, and approval.</p>
+          </div>
+          <input class="field" aria-label="Search missions, nodes, alerts" value="Search missions, nodes, alerts">
+          <div class="safety-banner" data-testid="command-safety-banner">Command Safety: approval gate active</div>
+        </header>
 
-      <section class="posture" data-testid="fleet-posture-summary" data-component="FleetPostureSummary">
-        <article class="metric"><div class="label">Active missions</div><div class="value">18</div><div class="hint">4 high priority</div></article>
-        <article class="metric"><div class="label">Degraded edge nodes</div><div class="value">6</div><div class="hint">2 disconnected</div></article>
-        <article class="metric"><div class="label">Critical alerts</div><div class="value">9</div><div class="hint">3 need escalation</div></article>
-        <article class="metric"><div class="label">Pending approvals</div><div class="value">5</div><div class="hint">2 time out soon</div></article>
-        <article class="metric"><div class="label">Failed receipts</div><div class="value">3</div><div class="hint">retry eligible</div></article>
-        <article class="metric"><div class="label">Stale telemetry</div><div class="value">11%</div><div class="hint">policy threshold 8%</div></article>
-      </section>
+        <section class="summary-grid" data-testid="fleet-posture-summary" data-component="FleetPostureSummary" data-module-purpose="posture scan">
+          <article class="metric">
+            <div class="label">Active missions</div>
+            <div class="value">18</div>
+            <div class="hint">4 high priority</div>
+          </article>
+          <article class="metric">
+            <div class="label">Degraded nodes</div>
+            <div class="value">6</div>
+            <div class="hint">2 disconnected offline</div>
+          </article>
+          <article class="metric">
+            <div class="label">Critical alerts</div>
+            <div class="value">9</div>
+            <div class="hint">3 need escalation</div>
+          </article>
+          <article class="metric">
+            <div class="label">Approval queue</div>
+            <div class="value">5</div>
+            <div class="hint">2 receipt pending timeout</div>
+          </article>
+        </section>
 
-      <section class="workspace">
-        <div class="layout-main">
-          <section class="panel" data-testid="mission-table" data-component="MissionTable" data-row-key="missionId">
-            <div class="panel-header">
-              <h2>Mission queue</h2>
-              <div class="tools" aria-label="Mission tools">
-                <span class="chip">Filter: active</span>
-                <span class="chip">Sort: risk desc</span>
-                <button class="btn">Bulk acknowledge</button>
+        <section class="workbench-grid" data-testid="command-workbench" data-component="CommandWorkbench">
+          <div class="primary-stack" data-layout-role="primary" data-context="mission:M-482">
+            <section class="module" id="missions" data-testid="mission-table" data-component="MissionTable" data-row-key="missionId" data-context="mission:M-482" data-module-purpose="selected mission queue">
+              <div class="section-head">
+                <div>
+                  <h2>Mission queue</h2>
+                  <p>Sort by operational risk. The selected mission drives the context panel.</p>
+                </div>
+                <div class="toolbar" aria-label="Mission queue tools">
+                  <span class="chip">Filter: active</span>
+                  <span class="chip">Sort: risk desc</span>
+                  <button class="btn" data-action-scope="mission queue">Bulk acknowledge</button>
+                </div>
+              </div>
+
+              <div class="table-scroll">
+                <table aria-label="Mission table">
+                  <colgroup>
+                    <col data-column="mission" style="width: 26%">
+                    <col data-column="edge-node" style="width: 16%">
+                    <col data-column="alert" style="width: 22%">
+                    <col data-column="receipt" style="width: 16%">
+                    <col data-column="risk" style="width: 10%">
+                    <col data-column="action" style="width: 10%">
+                  </colgroup>
+                  <thead>
+                    <tr>
+                      <th>Mission</th>
+                      <th>Edge node</th>
+                      <th>Alert</th>
+                      <th>Command receipt</th>
+                      <th>Risk</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr class="selected" aria-selected="true" id="mission-m-482">
+                      <td><strong>M-482 Perimeter sweep</strong><span class="sub">Target: radar pair and drone relay</span></td>
+                      <td>Node-A17<br><span class="tag warning">stale data</span></td>
+                      <td><span class="tag danger">critical</span><br>Intrusion path variance</td>
+                      <td><span class="tag warning">receipt pending</span><br><span class="sub">timeout 08:42</span></td>
+                      <td><span class="tag danger">high</span></td>
+                      <td><button class="btn primary" data-primary-action="review-selected-mission">Review</button></td>
+                    </tr>
+                    <tr>
+                      <td><strong>M-477 Convoy support</strong><span class="sub">Target: cameras and relay vehicle</span></td>
+                      <td>Node-B04<br><span class="tag success">healthy</span></td>
+                      <td><span class="tag warning">warning</span><br>Relay jitter</td>
+                      <td><span class="tag success">executed</span><br><span class="sub">receipt 09:28</span></td>
+                      <td><span class="tag warning">medium</span></td>
+                      <td><button class="btn">Open</button></td>
+                    </tr>
+                    <tr>
+                      <td><strong>M-461 Sensor reset</strong><span class="sub">Target: fixed cameras</span></td>
+                      <td>Node-C22<br><span class="tag danger">offline</span></td>
+                      <td><span class="tag audit">stale</span><br>Evidence indexing</td>
+                      <td><span class="tag danger">failed</span><br><span class="sub">retry gated</span></td>
+                      <td><span class="tag danger">high</span></td>
+                      <td><button class="btn danger">Audit</button></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <div class="status-row" aria-label="Covered states">
+                <span class="tag">loading skeleton</span>
+                <span class="tag">empty queue</span>
+                <span class="tag">error retry</span>
+                <span class="tag">partial data</span>
+                <span class="tag warning">stale</span>
+                <span class="tag danger">disconnected</span>
+              </div>
+            </section>
+
+            <section class="module" data-testid="node-health-panel" data-component="NodeHealthPanel" data-context="mission:M-482" data-module-purpose="edge node health and local autonomy">
+              <div class="section-head">
+                <div>
+                  <h2>Edge node health</h2>
+                  <p>ECharts adapter: NodeHealthChart. ConfigProvider tokens map status colors.</p>
+                </div>
+                <span class="chip">AI decision run ADR-1182</span>
+              </div>
+              <div class="node-grid">
+                <div class="node-card"><strong>Node-A17</strong><span class="tag warning">stale</span><span class="sub">Queue 14, sync 9m ago</span></div>
+                <div class="node-card"><strong>Node-B04</strong><span class="tag success">healthy</span><span class="sub">Queue 3, sync 22s ago</span></div>
+                <div class="node-card"><strong>Node-C22</strong><span class="tag danger">offline</span><span class="sub">Local autonomy active</span></div>
+                <div class="node-card"><strong>Node-D31</strong><span class="tag audit">audit hold</span><span class="sub">Policy change pending</span></div>
+              </div>
+            </section>
+
+            <section class="module" data-testid="implementation-quality" data-component="ImplementationQuality" data-module-purpose="ai friendly maintainability">
+              <div class="section-head">
+                <div>
+                  <h2>Implementation guardrails</h2>
+                  <p>Agent-maintainable UI contract for React, TypeScript, Ant Design, StyleX, and Playwright screenshot checks.</p>
+                </div>
+              </div>
+              <div class="quality-strip">
+                <div class="quality-item"><strong>Typed API</strong><br>Mission, EdgeNode, Alert, Evidence, Command, Receipt.</div>
+                <div class="quality-item"><strong>Domain wrappers</strong><br>MissionTable, RiskStatusTag, CommandApprovalPanel.</div>
+                <div class="quality-item"><strong>Stable selectors</strong><br>rowKey, data-testid, data-eval, data-context.</div>
+                <div class="quality-item"><strong>States</strong><br>loading, empty, error, disabled, selected, focus.</div>
+                <div class="quality-item"><strong>Responsive QA</strong><br>desktop, tablet, mobile viewport validation.</div>
+              </div>
+            </section>
+          </div>
+
+          <aside
+            class="context-panel"
+            id="commands"
+            data-testid="selected-mission-context"
+            data-component="SelectedMissionContext"
+            data-layout-role="context"
+            data-context="mission:M-482"
+            data-mobile-order="mobile-context-first"
+            data-module-purpose="selected mission alert evidence approval"
+          >
+            <div class="selected-summary">
+              <div class="selected-title">
+                <div>
+                  <h2>Selected mission M-482</h2>
+                  <div class="sub">Perimeter sweep. Node-A17. Radar and drone relay.</div>
+                </div>
+                <span class="tag danger">high risk</span>
+              </div>
+              <div class="detail-list">
+                <div class="detail-item">
+                  <div><strong>Decision</strong><div class="sub">Agent creates a command draft. Direct dispatch blocked.</div></div>
+                  <span class="tag audit">ADR-1182</span>
+                </div>
+                <div class="detail-item">
+                  <div><strong>Safety policy</strong><div class="sub">Two-person approval, destructive confirmation, and receipt timeout are active.</div></div>
+                  <span class="tag warning">role gate</span>
+                </div>
               </div>
             </div>
-            <div class="table-scroll">
-              <table aria-label="Mission table">
-                <thead>
-                  <tr>
-                    <th>Mission</th><th>Edge node</th><th>Alert</th><th>Command receipt</th><th>Risk</th><th>Action</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td><strong>M-482 Perimeter sweep</strong><span class="sub">Target group: radar + drone relay</span></td>
-                    <td>Node-A17<br><span class="tag warning">stale data</span></td>
-                    <td><span class="tag danger">critical</span> Intrusion path variance</td>
-                    <td><span class="tag warning">receipt pending</span></td>
-                    <td><span class="tag danger">high</span></td>
-                    <td class="row-actions"><button class="btn primary">Review</button><button class="btn">Evidence</button></td>
-                  </tr>
-                  <tr>
-                    <td><strong>M-477 Convoy support</strong><span class="sub">Target group: cameras + relay vehicle</span></td>
-                    <td>Node-B04<br><span class="tag success">healthy</span></td>
-                    <td><span class="tag warning">warning</span> Relay jitter</td>
-                    <td><span class="tag success">executed</span></td>
-                    <td><span class="tag warning">medium</span></td>
-                    <td class="row-actions"><button class="btn">Open</button><button class="btn">Timeline</button></td>
-                  </tr>
-                  <tr>
-                    <td><strong>M-461 Sensor reset</strong><span class="sub">Target group: fixed cameras</span></td>
-                    <td>Node-C22<br><span class="tag danger">disconnected</span></td>
-                    <td><span class="tag stale">stale</span> Evidence indexing</td>
-                    <td><span class="tag danger">failed</span></td>
-                    <td><span class="tag danger">high</span></td>
-                    <td class="row-actions"><button class="btn danger">Blocked</button><button class="btn">Audit</button></td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-            <div class="states" aria-label="Covered states">
-              <span class="tag">loading skeleton</span><span class="tag">empty queue</span><span class="tag">error retry</span><span class="tag">partial data</span><span class="tag stale">stale</span><span class="tag danger">disconnected</span>
-            </div>
-          </section>
 
-          <section class="panel" data-testid="node-health-panel" data-component="NodeHealthPanel">
-            <div class="panel-header">
-              <h2>Node health matrix</h2>
-              <span class="chip">ECharts adapter: NodeHealthChart</span>
-            </div>
-            <div class="health-grid">
-              <div class="node"><strong>Node-A17</strong><span class="tag warning">stale</span><p class="sub">Queue 14, sync 9m ago</p></div>
-              <div class="node"><strong>Node-B04</strong><span class="tag success">healthy</span><p class="sub">Queue 3, sync 22s ago</p></div>
-              <div class="node"><strong>Node-C22</strong><span class="tag danger">offline</span><p class="sub">Local autonomy active</p></div>
-              <div class="node"><strong>Node-D31</strong><span class="tag audit">audit hold</span><p class="sub">Approval policy changed</p></div>
-            </div>
-          </section>
+            <section class="context-group" id="alerts" data-testid="alert-triage" data-component="AlertTriage" data-context="mission:M-482" data-module-purpose="alert timeline and evidence">
+              <div class="section-head">
+                <div>
+                  <h3>Alert triage</h3>
+                  <p>Alert, evidence, and approval stay scoped to the selected mission.</p>
+                </div>
+                <span class="chip">critical</span>
+              </div>
+              <div class="timeline" data-component="AlertTimeline">
+                <div class="timeline-item danger"><strong>09:42</strong><div><strong>Critical alert</strong><div class="sub">Radar variance linked to M-482. Escalation required.</div></div></div>
+                <div class="timeline-item warning"><strong>09:38</strong><div><strong>Evidence attached</strong><div class="sub">Telemetry partial data and image snapshot added.</div></div></div>
+                <div class="timeline-item audit"><strong>09:31</strong><div><strong>Policy check</strong><div class="sub">Direct dispatch blocked by high-risk target policy.</div></div></div>
+              </div>
+            </section>
 
-          <section class="panel" id="alerts" data-testid="alert-triage" data-component="AlertTriage">
-            <div class="panel-header">
-              <h2>Alert triage</h2>
-              <div class="tools"><span class="chip">critical</span><span class="chip">warning</span><span class="chip">disconnected</span></div>
-            </div>
-            <div class="timeline" data-component="AlertTimeline">
-              <div class="event danger"><strong>09:42 Critical alert</strong><div class="sub">Radar variance linked to M-482. AI recommendation: create command draft, no direct dispatch.</div></div>
-              <div class="event warning"><strong>09:38 Evidence attached</strong><div class="sub">Telemetry, image snapshot, and operator note available in EvidenceViewer.</div></div>
-              <div class="event audit"><strong>09:31 Policy check</strong><div class="sub">Two-person approval required because target includes mobile relay.</div></div>
-            </div>
-            <div class="evidence" data-testid="evidence-viewer" data-component="EvidenceViewer">
-              <div class="evidence-item"><strong>Telemetry</strong><p class="sub">Partial data, 89% freshness, stale window flagged.</p></div>
-              <div class="evidence-item"><strong>Image snapshot</strong><p class="sub">Evidence ID EV-2209, audit trace attached.</p></div>
-              <div class="evidence-item"><strong>AI decision run</strong><p class="sub">AgentDecisionRun ADR-1182, confidence 0.74, blocked direct dispatch.</p></div>
-              <div class="evidence-item"><strong>Receipt bundle</strong><p class="sub">Previous command failed on Node-C22; retry requires admin approval.</p></div>
-            </div>
-          </section>
-        </div>
+            <section class="context-group" data-testid="evidence-viewer" data-component="EvidenceViewer" data-context="mission:M-482" data-module-purpose="evidence and audit proof">
+              <div class="section-head">
+                <div>
+                  <h3>Evidence</h3>
+                  <p>Operator can inspect provenance before requesting approval.</p>
+                </div>
+              </div>
+              <div class="detail-list">
+                <div class="detail-item"><div><strong>Telemetry</strong><div class="sub">Freshness 89%, stale window flagged.</div></div><span class="tag warning">partial</span></div>
+                <div class="detail-item"><div><strong>Image snapshot</strong><div class="sub">Evidence EV-2209, audit trace attached.</div></div><span class="tag success">ready</span></div>
+                <div class="detail-item"><div><strong>Receipt bundle</strong><div class="sub">Previous receipt failed on Node-C22, retry disabled.</div></div><span class="tag danger">failed</span></div>
+              </div>
+            </section>
 
-        <aside class="drawer" id="commands" data-testid="command-approval-drawer" data-component="CommandApprovalDrawer">
-          <div class="panel-header">
-            <h2>Command approval</h2>
-            <span class="tag danger">high risk</span>
-          </div>
-          <p class="sub">Target preview: Node-A17, radar pair R-14/R-15, drone relay D-7. Payload changes route sweep radius from 120m to 180m.</p>
-          <div class="checklist" data-component="ApprovalTimeline">
-            <div class="check"><span class="dot"></span><div><strong>Typed payload valid</strong><div class="sub">Command schema: PerimeterSweepAdjust</div></div><span class="tag success">pass</span></div>
-            <div class="check" data-state="permission-limited"><span class="dot warn"></span><div><strong>Permission-limited</strong><div class="sub">Maintainer can draft, commander approval required.</div></div><span class="tag warning">role gate</span></div>
-            <div class="check" data-state="destructive-confirmation"><span class="dot danger"></span><div><strong>Destructive confirmation</strong><div class="sub">Names target, impact, timeout, and recovery path.</div></div><span class="tag danger">required</span></div>
-            <div class="check" data-state="two-person-approval"><span class="dot warn"></span><div><strong>Two-person approval</strong><div class="sub">Requester: Li Wei. Approver: pending. Expires in 08:42.</div></div><span class="tag warning">pending</span></div>
-            <div class="check" data-state="receipt-pending"><span class="dot warn"></span><div><strong>Receipt pending</strong><div class="sub">Timeout countdown active; retry disabled until receipt resolves.</div></div><span class="tag warning">timeout</span></div>
-            <div class="check" data-state="failed"><span class="dot danger"></span><div><strong>Failed receipt path</strong><div class="sub">Rollback guidance and audit replay are available.</div></div><span class="tag danger">failed</span></div>
-          </div>
-          <div class="row-actions">
-            <button class="btn">Save draft</button>
-            <button class="btn">Request approval</button>
-            <button class="btn danger">Block dispatch</button>
-          </div>
-          <div class="states">
-            <span class="tag">data-testid</span><span class="tag">rowKey</span><span class="tag">stable selectors</span><span class="tag">keyboard focus</span><span class="tag">desktop viewport</span><span class="tag">mobile viewport</span><span class="tag">Playwright screenshot</span>
-          </div>
-        </aside>
-      </section>
+            <section class="context-group" data-testid="command-approval-drawer" data-component="CommandApprovalDrawer" data-context="mission:M-482" data-action-scope="selected mission" data-module-purpose="command approval">
+              <div class="section-head">
+                <div>
+                  <h3>Command approval</h3>
+                  <p>Payload changes sweep radius from 120m to 180m.</p>
+                </div>
+                <span class="tag warning">pending</span>
+              </div>
+              <div class="checklist" data-component="ApprovalTimeline">
+                <div class="check-item" data-state="permission-limited"><div><strong>Permission-limited</strong><div class="sub">Maintainer can draft; commander approval required.</div></div><span class="tag warning">role gate</span></div>
+                <div class="check-item" data-state="destructive-confirmation"><div><strong>Destructive confirmation</strong><div class="sub">Names target, command, impact, timeout, and recovery path.</div></div><span class="tag danger">required</span></div>
+                <div class="check-item" data-state="two-person-approval"><div><strong>Two-person approval</strong><div class="sub">Requester Li Wei. Approver pending. Expires in 08:42.</div></div><span class="tag warning">pending</span></div>
+                <div class="check-item" data-state="receipt-pending"><div><strong>Command pending</strong><div class="sub">Receipt pending; timeout countdown active.</div></div><span class="tag warning">timeout</span></div>
+              </div>
+              <div class="action-row">
+                <button class="btn">Save draft</button>
+                <button class="btn primary" data-primary-action="request-approval">Request approval</button>
+                <button class="btn danger">Block dispatch</button>
+              </div>
+            </section>
+          </aside>
+        </section>
+      </div>
     </main>
   </div>
 </body>

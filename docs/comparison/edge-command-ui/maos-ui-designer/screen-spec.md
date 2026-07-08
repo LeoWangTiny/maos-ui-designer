@@ -1,55 +1,44 @@
 # MAOS UI Designer Screen Spec
 
-## Screen 1: Command Center Overview
+## Screen: Command Center Workbench
 
-Primary components:
+Primary model: selected mission `M-482`.
 
-- CommandCenterShell: role-aware navigation, environment switcher, global search, command safety banner, and notification center.
-- FleetPostureSummary: active missions, degraded edge nodes, critical alerts, pending approvals, failed receipts, and stale telemetry.
-- NodeHealthPanel: edge node connectivity, workload, local autonomy mode, command queue depth, last sync, and disconnected state.
-- MissionTable: typed columns, stable `rowKey`, severity tags, command receipt health, owner, filters, sorting, selection, and bulk acknowledgement.
-- AgentDecisionSummary: latest agent decision run, confidence, blocked constraints, evidence count, and audit status.
+The screen is a selected-object workbench. The mission queue is the primary area, and every secondary module references the selected mission instead of acting as a standalone dashboard tile.
 
-Expected states:
+## Components
 
-- loading skeleton, empty mission queue, error retry, partial data, stale data, disconnected node, permission-limited action, selected row, focus state, failed receipt.
+- CommandCenterShell: role-aware navigation, global search, command safety banner, and responsive rail behavior.
+- FleetPostureSummary: active missions, degraded edge nodes, critical alerts, approval queue, failed receipts, and stale telemetry.
+- MissionTable: typed columns, stable `rowKey`, `colgroup` widths, selected row, severity tags, command receipt health, filters, sorting, and bulk acknowledgement.
+- NodeHealthPanel: edge node connectivity, workload, local autonomy mode, command queue depth, last sync, stale data, and disconnected offline state.
+- SelectedMissionContext: selected mission summary, target preview, safety policy, agent decision run, and scoped actions.
+- AlertTriage: alert timeline, critical/warning/stale/disconnected filters, AI recommendation, acknowledgement, escalation, and linked mission.
+- EvidenceViewer: telemetry, logs, image snapshot, command receipt bundle, operator note, and audit trace.
+- CommandApprovalDrawer: command payload, policy checks, permission-limited state, destructive confirmation, two-person approval, timeout, receipt pending, failed receipt, retry eligibility, and audit replay.
+- ImplementationQuality: typed API, domain wrappers, StyleX layout tokens, Ant Design ConfigProvider theme tokens, ECharts adapter, accessibility labels, stable selectors, and Playwright screenshot hooks.
 
-## Screen 2: Alert Triage
+## Layout Contract
 
-Primary components:
+- Desktop: `CommandCenterShell` rail plus a centered page frame. The workbench grid uses primary `MissionTable` and secondary `SelectedMissionContext` columns.
+- Tablet: navigation becomes a horizontal rail; workbench columns collapse into a single column without losing selected mission context.
+- Mobile: rail is hidden, summary cards stack, selected mission context moves before the table, page-level overflow is hidden, and only `.table-scroll` scrolls horizontally.
+- Alignment: section headers share `.section-head`; modules use the same spacing, radius, border, and shadow tokens; table columns are explicit through `colgroup`.
 
-- AlertTriageQueue: critical, warning, stale, disconnected, and acknowledged filters.
-- AlertTimeline: alert source, severity, evidence, AI recommendation, acknowledgement, escalation, linked mission, and recovery notes.
-- EvidenceViewer: telemetry, logs, image snapshot, command receipt, operator note, and audit trace.
-- CommandDraftPanel: turns AI recommendation into a reviewable command draft without dispatching directly.
+## Actions
 
-Expected actions:
+- Primary action: review selected mission and request approval.
+- Secondary actions: save draft, inspect evidence, acknowledge alerts, open mission, and audit receipt.
+- Destructive action: block dispatch, with target, command, impact, timeout, and recovery path shown.
+- Bulk action: acknowledge lower-risk queue items without changing selected mission context.
 
-- acknowledge, escalate, assign owner, open evidence, create command draft, export audit package.
+## States
 
-## Screen 3: Command Approval Drawer
+- Default, selected, hover, focus, disabled, loading skeleton, empty queue, error retry, partial data, stale data, disconnected/offline node, permission-limited, command pending, receipt pending, timeout, failed receipt, success, destructive confirmation, two-person approval, and audit replay.
 
-Primary components:
+## Acceptance Checks
 
-- CommandApprovalDrawer: target preview, command payload, policy checks, timeout, impact summary, and receipt status.
-- PermissionGate: role gate with disabled reason, escalation path, and audit explanation.
-- ApprovalTimeline: requester, approver, policy reason, expiry, receipt pending, failed receipt, retry eligibility, and audit replay.
-- DestructiveConfirmation: names target, command, impact, timeout, and two-person approval requirement.
-
-Expected states:
-
-- permission-limited, destructive confirmation, two-person approval, command pending, receipt pending, timeout, failed, retry, success, audit replay.
-
-## Responsive QA
-
-- Desktop: 1440px command center with rail, posture summary, mission table, topology/health panel, and approval drawer.
-- Tablet: secondary panels collapse into tabs.
-- Mobile: alert handoff and approval review are readable; high-risk command authoring is disabled unless policy allows.
-
-## Implementation Guardrails
-
-- Ant Design is acceptable because the surface is Web B2B/admin and data dense.
-- Use ConfigProvider theme tokens and domain wrappers to keep the UI agent-maintainable.
-- Use StyleX for app-owned layout tokens, not arbitrary inline styles.
-- Use typed chart adapters for ECharts or AntV.
-- Add stable `data-testid` and `data-eval-*` attributes for screenshot and evaluator checks.
+- Evaluator must include `Layout integrity and alignment`, `Module coherence and product model`, and `Responsive behavior and overflow control`.
+- Keyword-only artifacts must fail marketplace grade even if they mention alignment and responsiveness.
+- MAOS prototype must pass structural gates and render without page-level horizontal overflow on desktop and mobile.
+- Screenshots are generated locally for desktop `1440x1000` and mobile `390x844`, then excluded from the committed marketplace package.
