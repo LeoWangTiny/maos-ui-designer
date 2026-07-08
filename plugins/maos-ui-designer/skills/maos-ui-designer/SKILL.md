@@ -31,6 +31,7 @@ Ask before proceeding when:
 - The frontend framework or UI kit matters and cannot be inferred from the codebase.
 - The user asks for AI-friendly UI, agent-editable UI, StyleX, design tokens, or a styling-system choice.
 - The industry, product audience, or primary workflow is ambiguous.
+- The page layout formation is ambiguous: list/detail, workbench, dashboard/drilldown, wizard, canvas/inspector, or terminal/TUI pane.
 - The user asks for a style, color, or "make it professional" without enough direction.
 - The request could become risky without clarification: regulated data, payments, destructive actions, permissions, operational control, or accessibility constraints.
 
@@ -52,12 +53,15 @@ Before choosing layout or visual language, identify the design axes:
 - `Surface`: web app, responsive web, mobile app, desktop app, Figma prototype, CLI, TUI, terminal output, docs/README, or hybrid.
 - `Framework`: frontend framework, UI component library, styling system, icon set, charting library, and terminal/TUI framework when relevant.
 - `AI-friendly UI`: component semantics, design tokens, typed variants, testability, accessibility, and predictable styling constraints.
+- `Layout formation`: list/detail, workbench, dashboard/drilldown, wizard/stepper, canvas/inspector, terminal/TUI pane, or another explicit formation.
 - `Density`: compact daily-use, balanced decision surface, spacious high-stakes, presentation-grade.
 - `Risk`: accessibility, regulated content, sensitive data, payment, destructive actions, operational safety.
 
 Infer these from the product, codebase, screenshot, or user wording. If uncertain, state the chosen axes as assumptions. For detailed guidance, read `references/design-context-matrix.md` when industry, style, palette, or terminal-vs-web distinction materially affects the result.
 
 For framework choice, prefer the existing project stack, but always place it under an AI-friendly implementation posture. If the user explicitly sets a framework, UI component library, or styling system, treat it as a hard constraint unless it conflicts with the repo or task. For greenfield work, first apply the AI-friendly gate, then choose a conservative default by surface and product type. Read `references/framework-selection.md` when the stack is unclear or the user asks to choose/set a UI framework. Read `references/ui-framework-matrix.md` when choosing a UI component library by surface or product type. Read `references/ai-friendly-ui.md` when the user asks for AI-friendly UI, agent-editable UI, StyleX, design tokens, or predictable code generation.
+
+For non-trivial pages, read `references/layout-formation.md` before visual design. Confirm or state the layout formation before choosing detailed visual styling, cards, grids, or component composition.
 
 ## Core Workflow
 
@@ -98,7 +102,25 @@ Before layout, define the product mechanics:
 
 For complex flows, sketch a concise flow model before the screen design. If a visual architecture or process diagram is requested, pair with a diagram/FigJam workflow instead of forcing the whole design into prose.
 
-### 4. Produce A Design Brief
+### 4. Confirm Layout Formation
+
+Before visual design, choose the page formation: the tactical arrangement that decides what owns the page and what supports it.
+
+For non-trivial screens, name:
+
+- `Layout formation`: list/detail, workbench, dashboard/drilldown, wizard/stepper, canvas/inspector, terminal/TUI pane, or a product-specific formation.
+- `Primary object`: the record, mission, task, command, canvas, conversation, or entity the page is organized around.
+- `Primary region`: the area that owns the user's main job.
+- `Secondary region`: context, detail, inspector, evidence, timeline, filters, or recovery support.
+- `Actions`: where primary, secondary, bulk, and destructive actions live.
+- `Responsive collapse`: desktop, tablet, and mobile behavior.
+- `Rejected formations`: plausible formations that are not appropriate and why.
+
+If the formation is ambiguous, propose 2-3 formations with trade-offs and recommend one. If the user wants speed, state the chosen formation as an assumption and continue. Read `references/layout-formation.md` for the formation catalog and output contract.
+
+Do not start visual styling, decorative composition, or detailed component layout until the formation is clear.
+
+### 5. Produce A Design Brief
 
 For non-trivial work, write a compact brief before implementation:
 
@@ -106,6 +128,7 @@ For non-trivial work, write a compact brief before implementation:
 - `Job`: what they are trying to accomplish
 - `Information hierarchy`: what must be noticed first, second, and third
 - `Design context`: industry, style, palette, surface, framework, density, and risk assumptions
+- `Layout formation`: chosen formation, primary object, primary region, secondary region, actions, responsive collapse, and rejected formations
 - `AI-friendly UI`: component semantics, token strategy, variant API, accessibility/test hooks, and styling constraints
 - `Implementation constraints`: framework, UI kit, styling system, StyleX/Tailwind/CSS modules choice, icons, charts, browser/mobile/terminal targets, and AI-friendly wrapper strategy
 - `Layout`: navigation, primary region, secondary panels, toolbars, filters, tables/cards/forms, and responsive behavior
@@ -116,21 +139,22 @@ For non-trivial work, write a compact brief before implementation:
 
 Keep the brief short enough to guide work, not become a specification swamp.
 
-### 5. Shape Information Architecture And Layout
+### 6. Shape Information Architecture And Layout
 
 Make the screen understandable before making it pretty:
 
 - Put the real product surface in the first viewport, not a generic intro
+- Make the chosen layout formation visible in the first viewport.
 - Give the main work area the most space and visual clarity
 - Place filters, tabs, search, sorting, object metadata, and actions where users expect them
 - Separate navigation, page actions, object actions, and row/card actions
 - Use tables for comparison and repeated operations; use cards for scannable objects with distinct summaries
-- Define mobile behavior explicitly instead of squeezing desktop regions
+- Define mobile behavior from the formation instead of squeezing desktop regions
 - Set stable dimensions for boards, grids, toolbars, counters, tiles, and dynamic content
 
 Do not make internal tools look like landing pages. Avoid oversized hero sections, decorative card stacks, vague marketing copy, and gradients as a substitute for structure.
 
-### 6. Define The Visual System
+### 7. Define The Visual System
 
 Specify practical rules before decorating:
 
@@ -145,7 +169,7 @@ Specify practical rules before decorating:
 
 Avoid one-note palettes, gratuitous purple/blue gradients, excessive shadows, nested cards, cramped text, and decorative elements that do not support comprehension.
 
-### 7. Define AI-Friendly Component Architecture
+### 8. Define AI-Friendly Component Architecture
 
 Before component details, define how the interface will stay understandable to humans and AI agents:
 
@@ -159,7 +183,7 @@ Before component details, define how the interface will stay understandable to h
 
 For deeper guidance, read `references/ai-friendly-ui.md`.
 
-### 8. Specify Components And States
+### 9. Specify Components And States
 
 Design the behavior users will actually encounter:
 
@@ -169,7 +193,7 @@ Design the behavior users will actually encounter:
 - Tables/lists with sorting, filtering, selection, bulk actions, pagination/virtualization, long text, and row-level actions
 - AI interfaces with input/result relationship, progress, traceability, regenerate/edit controls, history, and failure recovery
 
-### 9. Implement Or Produce The Artifact
+### 10. Implement Or Produce The Artifact
 
 When implementing:
 
@@ -188,12 +212,13 @@ When producing Figma, FigJam, or design-only artifacts, keep the same product mo
 
 When designing CLI, TUI, or terminal output, optimize for command clarity, scannable text hierarchy, useful defaults, predictable flags, readable tables, non-color-dependent status, concise errors, recovery commands, and copy-pasteable examples. Choose terminal frameworks deliberately, such as Ink, Textual, Rich, Bubble Tea, or Blessed, based on the repo language and interaction model. Do not apply web-only visual assumptions to terminal interfaces.
 
-### 10. Verify Visually
+### 11. Verify Visually
 
 Before finalizing substantial frontend work:
 
 - Run the app or open the artifact when possible
 - Check desktop and mobile breakpoints
+- Check that the chosen layout formation is visible and that modules have a clear primary/secondary relationship
 - Inspect for overlap, clipping, unreadable text, unstable layout, bad focus states, and contrast issues
 - Use screenshots or browser checks when practical, especially for complex or visual changes
 - Fix visible issues before reporting completion
@@ -202,17 +227,18 @@ For CLI/TUI work, verify sample commands, terminal widths, wrapping, color fallb
 
 If the app needs a local dev server, start it and provide the URL after verification.
 
-### 11. Review And Iterate
+### 12. Review And Iterate
 
 Review like a strict product designer:
 
 - Can the target user understand where to look and what to do in five seconds?
+- Is the page formation appropriate for the job, or did the page become an accidental dashboard/card pile?
 - Does the screen support repeated daily use, not just presentation?
 - Are real states, errors, edge cases, permissions, and responsive layouts handled?
 - Does anything look generic, decorative, unaligned, low-contrast, cramped, or template-like?
 - Would the UI still work with long names, empty data, missing permissions, or slow networks?
 
-For design context selection, read `references/design-context-matrix.md`. For framework selection, read `references/framework-selection.md`. For UI component-library selection by endpoint/product type, read `references/ui-framework-matrix.md`. For AI-friendly UI and StyleX guidance, read `references/ai-friendly-ui.md`. For a full workflow checklist, read `references/design-workflow-checklist.md`. For deeper critique, read `references/ui-quality-rubric.md`.
+For layout formation, read `references/layout-formation.md`. For design context selection, read `references/design-context-matrix.md`. For framework selection, read `references/framework-selection.md`. For UI component-library selection by endpoint/product type, read `references/ui-framework-matrix.md`. For AI-friendly UI and StyleX guidance, read `references/ai-friendly-ui.md`. For a full workflow checklist, read `references/design-workflow-checklist.md`. For deeper critique, read `references/ui-quality-rubric.md`.
 
 ## Tool Pairing
 
@@ -229,4 +255,4 @@ For implementation requests, briefly present the design direction, implement the
 
 For critique requests, lead with findings ordered by severity, include concrete fixes, and apply the fixes if the user asked for changes.
 
-For full workflow requests, move through: select context, frame, inspect, model, brief, layout, visual system, states, implementation or artifact, visual QA, review.
+For full workflow requests, move through: select context, frame, inspect, model, confirm layout formation, brief, layout, visual system, states, implementation or artifact, visual QA, review.

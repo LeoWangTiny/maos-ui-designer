@@ -78,9 +78,9 @@ It compares the same edge-command B2B UI task across three runs:
 
 | Run | Score | Grade |
 | --- | ---: | --- |
-| `control-no-skill` | 45 | fail |
-| `generic-design-skill` | 57 | fail |
-| `maos-ui-designer` | 98 | marketplace |
+| `control-no-skill` | 41 | fail |
+| `generic-design-skill` | 52 | fail |
+| `maos-ui-designer` | 99 | marketplace |
 
 Run the comparison evaluator:
 

@@ -1,19 +1,20 @@
 {
-  "score": 98,
+  "score": 99,
   "passed": true,
   "grade": "marketplace",
   "missing": [],
   "details": {
-    "Product-specific B2B workflow": 12.0,
-    "Information architecture and page coverage": 11.0,
-    "AI-friendly implementation structure": 12.0,
+    "Product-specific B2B workflow": 11.0,
+    "Information architecture and page coverage": 10.0,
+    "AI-friendly implementation structure": 11.0,
     "B2B component realism": 8.0,
-    "Operational state coverage": 11.0,
-    "Visual maturity and density": 4.5,
+    "Operational state coverage": 10.0,
+    "Visual maturity and density": 3.75,
     "Responsive and screenshot readiness": 3.0,
-    "Layout integrity and alignment": 13.0,
-    "Module coherence and product model": 12.0,
-    "Responsive behavior and overflow control": 12.0
+    "Layout formation confirmation": 12.0,
+    "Layout integrity and alignment": 10.0,
+    "Module coherence and product model": 10.0,
+    "Responsive behavior and overflow control": 10.0
   },
   "artifact": "maos-ui-designer"
 }

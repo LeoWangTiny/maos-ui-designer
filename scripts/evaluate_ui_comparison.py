@@ -23,7 +23,7 @@ StructuralCheck = Callable[[str, str, str], bool]
 KEYWORD_CRITERIA: list[Criterion] = [
     {
         "name": "Product-specific B2B workflow",
-        "weight": 12,
+        "weight": 11,
         "groups": [
             ["edge command", "edge-command", "industrial", "iot"],
             ["command center", "command-center", "operations", "operational"],
@@ -34,7 +34,7 @@ KEYWORD_CRITERIA: list[Criterion] = [
     },
     {
         "name": "Information architecture and page coverage",
-        "weight": 11,
+        "weight": 10,
         "groups": [
             ["command center overview", "commandcenteroverview", "overview"],
             ["alert triage", "alerttriage"],
@@ -46,7 +46,7 @@ KEYWORD_CRITERIA: list[Criterion] = [
     },
     {
         "name": "AI-friendly implementation structure",
-        "weight": 12,
+        "weight": 11,
         "groups": [
             ["ai-friendly", "agent-maintainable", "agent maintainable"],
             ["semantic tokens", "tokens", "theme", "configprovider"],
@@ -70,7 +70,7 @@ KEYWORD_CRITERIA: list[Criterion] = [
     },
     {
         "name": "Operational state coverage",
-        "weight": 11,
+        "weight": 10,
         "groups": [
             ["loading", "skeleton"],
             ["empty"],
@@ -85,7 +85,7 @@ KEYWORD_CRITERIA: list[Criterion] = [
     },
     {
         "name": "Visual maturity and density",
-        "weight": 6,
+        "weight": 5,
         "groups": [
             ["compact", "dense", "daily-use", "daily use"],
             ["neutral", "semantic", "warning", "danger", "success"],
@@ -156,6 +156,55 @@ def _has_stable_dynamic_dimensions(markdown: str, html: str, text: str) -> bool:
     )
 
 
+def _has_layout_formation_declared(markdown: str, html: str, text: str) -> bool:
+    return _contains_any(
+        text,
+        ["layout formation", "data-layout-formation", "formation gate", "page formation"],
+    )
+
+
+def _has_formation_choice(markdown: str, html: str, text: str) -> bool:
+    return _contains_any(
+        text,
+        [
+            "list + detail",
+            "list-detail",
+            "workbench",
+            "dashboard + drilldown",
+            "dashboard-drilldown",
+            "wizard / stepper",
+            "wizard",
+            "stepper",
+            "canvas + inspector",
+            "canvas-inspector",
+            "terminal/tui pane",
+            "terminal pane",
+            "tui pane",
+        ],
+    )
+
+
+def _has_formation_regions(markdown: str, html: str, text: str) -> bool:
+    return _contains_all(text, ["primary object", "primary region", "secondary region"]) or _contains_all(
+        html,
+        ['data-layout-role="primary"', 'data-layout-role="context"', "data-selected-mission"],
+    )
+
+
+def _has_formation_responsive_collapse(markdown: str, html: str, text: str) -> bool:
+    return _contains_all(text, ["desktop", "tablet", "mobile"]) and _contains_any(
+        text,
+        ["responsive collapse", "collapse", "mobile-task-first", "mobile-context-first", "data-responsive-strategy"],
+    )
+
+
+def _has_rejected_formations(markdown: str, html: str, text: str) -> bool:
+    return _contains_any(text, ["rejected formations", "rejected formation", "avoid formation"]) and _contains_any(
+        text,
+        ["not appropriate", "not use", "too linear", "hides", "avoid"],
+    )
+
+
 def _has_selected_object_context(markdown: str, html: str, text: str) -> bool:
     return _contains_any(html, ["data-selected-mission", "data-selected-object"]) and _has_regex(
         html, r'data-context\s*=\s*"mission:[^"]+"'
@@ -210,8 +259,19 @@ def _has_mobile_strategy_metadata(markdown: str, html: str, text: str) -> bool:
 
 STRUCTURAL_CRITERIA: list[dict[str, object]] = [
     {
+        "name": "Layout formation confirmation",
+        "weight": 12,
+        "checks": [
+            _has_layout_formation_declared,
+            _has_formation_choice,
+            _has_formation_regions,
+            _has_formation_responsive_collapse,
+            _has_rejected_formations,
+        ],
+    },
+    {
         "name": "Layout integrity and alignment",
-        "weight": 13,
+        "weight": 10,
         "checks": [
             _has_layout_shell,
             _has_spacing_tokens,
@@ -222,7 +282,7 @@ STRUCTURAL_CRITERIA: list[dict[str, object]] = [
     },
     {
         "name": "Module coherence and product model",
-        "weight": 12,
+        "weight": 10,
         "checks": [
             _has_selected_object_context,
             _has_shared_context_modules,
@@ -233,7 +293,7 @@ STRUCTURAL_CRITERIA: list[dict[str, object]] = [
     },
     {
         "name": "Responsive behavior and overflow control",
-        "weight": 12,
+        "weight": 10,
         "checks": [
             _has_viewport_meta,
             _has_multiple_breakpoints,

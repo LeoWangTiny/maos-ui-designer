@@ -16,9 +16,9 @@ The target product includes edge nodes, missions, devices, alerts, command recei
 
 | Run | Intent | Score | Grade | Result |
 | --- | --- | ---: | --- | --- |
-| `control-no-skill` | Generic dashboard with no explicit UI skill | 45 | fail | Too generic; misses AI-friendly structure, module coherence, and responsive layout discipline |
-| `generic-design-skill` | General design-system page output | 57 | fail | Better product framing, still misses structural layout gates and selected-object workflow coherence |
-| `maos-ui-designer` | MAOS workflow with B2B, industrial IoT, AI-friendly UI, and command safety constraints | 98 | marketplace | Passes structural layout, module coherence, responsive overflow, and workflow-depth gates |
+| `control-no-skill` | Generic dashboard with no explicit UI skill | 41 | fail | Too generic; misses layout formation, AI-friendly structure, module coherence, and responsive layout discipline |
+| `generic-design-skill` | General design-system page output | 52 | fail | Better product framing, still misses formation selection, structural layout gates, and selected-object workflow coherence |
+| `maos-ui-designer` | MAOS workflow with B2B, industrial IoT, AI-friendly UI, and command safety constraints | 99 | marketplace | Passes layout formation, structural layout, module coherence, responsive overflow, and workflow-depth gates |
 
 ## Artifacts
 
@@ -64,26 +64,27 @@ The mobile mission table is allowed to scroll inside `.table-scroll`; the page i
 
 ## Rubric
 
-The evaluator scores ten dimensions. The first seven check product and implementation coverage; the last three are structural gates that prevent keyword-only artifacts from passing:
+The evaluator scores eleven dimensions. The first seven check product and implementation coverage; the last four are structural gates that prevent keyword-only artifacts from passing:
 
-- Product-specific B2B workflow: 12
-- Information architecture and page coverage: 11
-- AI-friendly implementation structure: 12
+- Product-specific B2B workflow: 11
+- Information architecture and page coverage: 10
+- AI-friendly implementation structure: 11
 - B2B component realism: 8
-- Operational state coverage: 11
-- Visual maturity and density: 6
+- Operational state coverage: 10
+- Visual maturity and density: 5
 - Responsive and screenshot readiness: 3
-- Layout integrity and alignment: 13
-- Module coherence and product model: 12
-- Responsive behavior and overflow control: 12
+- Layout formation confirmation: 12
+- Layout integrity and alignment: 10
+- Module coherence and product model: 10
+- Responsive behavior and overflow control: 10
 
 ## Findings
 
-The control output looks clean, but it behaves like a generic dashboard: it lacks a real command approval model, stable implementation hooks, selected-object context, and responsive layout controls.
+The control output looks clean, but it behaves like a generic dashboard: it lacks a layout formation decision, a real command approval model, stable implementation hooks, selected-object context, and responsive layout controls.
 
-The generic design-skill output improves product framing and design-system consistency, but it still treats the product as a normal operations dashboard instead of a high-risk selected-mission workflow. It does not provide enough structural evidence for alignment, module coherence, or mobile overflow control.
+The generic design-skill output improves product framing and design-system consistency, but it still treats the product as a normal operations dashboard instead of a high-risk selected-mission workflow. It does not provide enough structural evidence for formation choice, alignment, module coherence, or mobile overflow control.
 
-The `maos-ui-designer` output now uses a selected-mission workbench: mission queue, edge node health, alert triage, evidence, and command approval all share one `data-context`. It names domain components, defines state boundaries, uses Ant Design-style B2B primitives through domain wrappers, adds StyleX/token guidance, includes stable selectors, and models permission-limited command approval with responsive overflow guards.
+The `maos-ui-designer` output now explicitly chooses a selected-mission workbench formation: mission queue, edge node health, alert triage, evidence, and command approval all share one `data-context`. It names domain components, defines state boundaries, uses Ant Design-style B2B primitives through domain wrappers, adds StyleX/token guidance, includes stable selectors, rejects weaker formations, and models permission-limited command approval with responsive overflow guards.
 
 ## Next Comparison Extensions
 

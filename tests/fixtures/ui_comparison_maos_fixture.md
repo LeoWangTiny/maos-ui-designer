@@ -8,6 +8,13 @@ AI-friendly UI gate: typed API, TypeScript table columns, semantic tokens, domai
 
 Framework choice: React + TypeScript with Ant Design-style Table, Form, Drawer, Modal, Tabs, Tags, Timeline, and ConfigProvider theme tokens. Use StyleX for app-owned tokenized layout and ECharts chart adapters for dense operational charts.
 
+Layout formation confirmation: Workbench.
+Primary object: selected mission M-482.
+Primary region: mission queue and edge-node health.
+Secondary region: selected mission context, alert evidence, command approval, and receipt recovery.
+Responsive collapse: desktop two-column workbench, tablet stacked workbench, mobile context-first with table-internal scroll.
+Rejected formations: dashboard + drilldown hides the selected mission; wizard / stepper is too linear for live triage; canvas + inspector is not appropriate for table-first command approval.
+
 ## Screen Spec
 
 - Command Center Overview: fleet health, active missions, degraded edge nodes, critical alerts, pending approvals, failed command receipts, topology map, mission queue, and AI decision summary.
@@ -28,7 +35,7 @@ Framework choice: React + TypeScript with Ant Design-style Table, Form, Drawer, 
   @media (max-width: 1100px) { .workbench-grid { grid-template-columns: 1fr; } }
   @media (max-width: 720px) { .summary-grid { grid-template-columns: 1fr; } }
 </style>
-<main data-eval-artifact="maos-ui-designer" data-layout="command-workbench" data-responsive-strategy="desktop-rail tablet-stack mobile-task-first" data-selected-mission="M-482" data-design-context="industrial-iot command-center responsive-web high-risk" data-ai-friendly="tokens wrappers rowKey data-testid accessibility">
+<main data-eval-artifact="maos-ui-designer" data-layout="command-workbench" data-layout-formation="workbench" data-responsive-strategy="desktop-rail tablet-stack mobile-task-first" data-selected-mission="M-482" data-design-context="industrial-iot command-center responsive-web high-risk" data-ai-friendly="tokens wrappers rowKey data-testid accessibility">
   <section data-testid="command-center-overview" data-component="CommandCenterOverview" data-layout-role="primary" data-context="mission:M-482" data-module-purpose="mission queue and posture">
     <div class="section-head"><h2>Selected mission queue</h2><button data-primary-action="review-selected-mission">Review selected mission</button></div>
     <div data-component="FleetPostureSummary">Degraded nodes, critical alerts, pending approvals, failed receipts</div>

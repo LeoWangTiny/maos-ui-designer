@@ -85,6 +85,7 @@ class UIComparisonEvaluatorTest(unittest.TestCase):
 
         self.assertLess(result["score"], 90)
         self.assertIn("Layout integrity and alignment", result["missing"])
+        self.assertIn("Layout formation confirmation", result["missing"])
         self.assertIn("Module coherence and product model", result["missing"])
         self.assertIn("Responsive behavior and overflow control", result["missing"])
 
@@ -96,6 +97,7 @@ class UIComparisonEvaluatorTest(unittest.TestCase):
 
         self.assertEqual(result["grade"], "marketplace")
         self.assertEqual(result["missing"], [])
+        self.assertGreaterEqual(result["details"]["Layout formation confirmation"], 8)
         self.assertGreaterEqual(result["details"]["Layout integrity and alignment"], 9)
         self.assertGreaterEqual(result["details"]["Module coherence and product model"], 8)
         self.assertGreaterEqual(result["details"]["Responsive behavior and overflow control"], 5)

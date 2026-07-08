@@ -16,6 +16,13 @@ Use this reference when reviewing a generated or implemented app screen for matu
 - Filters, search, tabs, actions, and object metadata sit where users expect them.
 - Labels are specific and operational, not vague or decorative.
 
+## Layout Formation
+
+- The page has a named formation: list/detail, workbench, dashboard/drilldown, wizard/stepper, canvas/inspector, terminal/TUI pane, or a clear product-specific formation.
+- The primary object, primary region, secondary region, action placement, and responsive collapse are explicit.
+- Plausible but wrong formations are rejected with a reason.
+- Modules share the formation instead of forming an accidental dashboard or card pile.
+
 ## Layout and Density
 
 - Alignment is crisp across headings, controls, tables, cards, and panels.
@@ -50,6 +57,7 @@ Use this reference when reviewing a generated or implemented app screen for matu
 - Looks like a landing page instead of an app.
 - Too many decorative cards, gradients, oversized headings, or vague badges.
 - Weak data hierarchy: everything has the same visual weight.
+- Missing page formation: modules are rich but do not know their positions or relationships.
 - Real workflow states are missing.
 - Copy explains the UI instead of helping the user act.
 - Mobile layout is just a squeezed desktop layout.

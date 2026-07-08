@@ -6,6 +6,15 @@ Primary model: selected mission `M-482`.
 
 The screen is a selected-object workbench. The mission queue is the primary area, and every secondary module references the selected mission instead of acting as a standalone dashboard tile.
 
+## Layout Formation Contract
+
+- Layout formation: Workbench.
+- Primary object: selected mission `M-482`.
+- Primary region: mission queue and edge-node health.
+- Secondary region: selected mission context, alert timeline, evidence, command approval, and receipt recovery.
+- Responsive collapse: desktop two-column workbench, tablet stacked workbench, mobile context-first with table-internal scroll.
+- Rejected formations: dashboard + drilldown hides the selected mission; wizard / stepper is too linear for live triage; canvas + inspector is not appropriate for this table-first approval workflow.
+
 ## Components
 
 - CommandCenterShell: role-aware navigation, global search, command safety banner, and responsive rail behavior.

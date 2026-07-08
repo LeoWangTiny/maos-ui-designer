@@ -1,26 +1,28 @@
 {
-  "score": 57,
+  "score": 52,
   "passed": false,
   "grade": "fail",
   "missing": [
     "AI-friendly implementation structure",
     "Operational state coverage",
     "Visual maturity and density",
+    "Layout formation confirmation",
     "Layout integrity and alignment",
     "Module coherence and product model",
     "Responsive behavior and overflow control"
   ],
   "details": {
-    "Product-specific B2B workflow": 12.0,
-    "Information architecture and page coverage": 9.17,
-    "AI-friendly implementation structure": 8.57,
+    "Product-specific B2B workflow": 11.0,
+    "Information architecture and page coverage": 8.33,
+    "AI-friendly implementation structure": 7.86,
     "B2B component realism": 6.4,
-    "Operational state coverage": 7.33,
-    "Visual maturity and density": 3.0,
+    "Operational state coverage": 6.67,
+    "Visual maturity and density": 2.5,
     "Responsive and screenshot readiness": 3.0,
-    "Layout integrity and alignment": 2.6,
-    "Module coherence and product model": 2.4,
-    "Responsive behavior and overflow control": 2.4
+    "Layout formation confirmation": 0.0,
+    "Layout integrity and alignment": 2.0,
+    "Module coherence and product model": 2.0,
+    "Responsive behavior and overflow control": 2.0
   },
   "artifact": "generic-design-skill"
 }

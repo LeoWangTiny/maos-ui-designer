@@ -34,6 +34,13 @@ Use this reference when the user asks for a complete design workflow, a major re
 - Identify permission levels and collaboration touchpoints.
 - Clarify what success looks like after the user completes the workflow.
 
+## Layout Formation
+
+- Choose the layout formation before visual design: list/detail, workbench, dashboard/drilldown, wizard/stepper, canvas/inspector, terminal/TUI pane, or a product-specific formation.
+- Name the primary object, primary region, secondary region, action placement, responsive collapse, and rejected formations.
+- Propose 2-3 formations when the right page shape is ambiguous.
+- Reject formations that would hide the primary object, over-linearize a live workflow, or create unrelated module piles.
+
 ## Research And References
 
 - Inspect existing app screens and local design tokens.
@@ -52,6 +59,7 @@ Use this reference when the user asks for a complete design workflow, a major re
 ## Layout
 
 - Establish the primary work area and secondary support areas.
+- Make the selected layout formation visible in the first viewport.
 - Choose table, list, card, timeline, board, canvas, or form layouts based on the job.
 - Define responsive behavior for mobile, tablet, and desktop.
 - Reserve stable dimensions for dynamic regions.

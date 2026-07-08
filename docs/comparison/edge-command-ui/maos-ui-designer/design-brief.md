@@ -23,6 +23,16 @@ The first viewport is a real B2B command workbench, not a landing page. It expos
 - Object relationship: selecting a mission drives the right context panel. Alert triage, evidence viewer, approval checks, and receipt status all share `data-context="mission:M-482"`.
 - Success signal: an operator can decide whether to request approval, save a draft, or block dispatch with evidence and policy context visible.
 
+## Layout Formation
+
+- Layout formation: Workbench.
+- Primary object: selected mission `M-482`.
+- Primary region: mission queue and edge-node health.
+- Secondary region: selected mission context, alert triage, evidence, command approval, receipt recovery, and audit proof.
+- Actions: review selected mission in the table; request approval, save draft, and block dispatch inside the selected mission context.
+- Responsive collapse: desktop two-column workbench; tablet stacked workbench; mobile context-first stack with mission table internal scroll.
+- Rejected formations: dashboard + drilldown hides the selected mission; wizard / stepper is too linear for live triage; canvas + inspector is not appropriate for table-first command approval.
+
 ## Information Architecture
 
 1. Global command shell: navigation, search, and command safety banner.
