@@ -19,6 +19,22 @@ codex plugin add maos-ui-designer@maos
 Use $maos-ui-designer to clarify the product context, choose an AI-friendly UI framework, and design or review this interface.
 ```
 
+## Tests
+
+Run the MAOS capability-map golden test:
+
+```powershell
+python -m unittest discover -s tests -v
+```
+
+Score a generated response:
+
+```powershell
+python scripts/evaluate_capability_map.py path\to\response.md --json
+```
+
+See `docs/tests/maos-capability-map-golden-test.md` for the full rubric.
+
 ## Developer
 
 - Developer: zxztai
