@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Generic Design Skill - Edge Command</title>
+  <style>
+    :root {
+      --bg: #f7f9fc;
+      --panel: #ffffff;
+      --text: #111827;
+      --muted: #667085;
+      --line: #dbe3ef;
+      --accent: #2563eb;
+      --warning: #b45309;
+      --danger: #c2410c;
+      --success: #15803d;
+      font-family: Inter, Segoe UI, Arial, sans-serif;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: var(--bg); color: var(--text); }
+    .app { display: grid; grid-template-columns: 220px 1fr; min-height: 100vh; }
+    .side { background: #172033; color: #e8eef9; padding: 22px 16px; }
+    .side h1 { font-size: 18px; margin: 0 0 24px; }
+    .side a { display: block; color: #cbd5e1; text-decoration: none; padding: 10px; border-radius: 8px; margin-bottom: 4px; }
+    .side a.active { background: rgba(255,255,255,.12); color: white; }
+    .main { padding: 24px; }
+    .top { display: flex; justify-content: space-between; gap: 14px; align-items: center; margin-bottom: 16px; }
+    .top h2 { margin: 0; font-size: 24px; }
+    .top p { margin: 4px 0 0; color: var(--muted); }
+    .filter { border: 1px solid var(--line); background: white; border-radius: 8px; padding: 10px 12px; }
+    .metrics { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin-bottom: 12px; }
+    .card, .panel { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 16px; box-shadow: 0 8px 20px rgba(18,37,63,.05); }
+    .label { color: var(--muted); font-size: 12px; }
+    .value { font-size: 26px; font-weight: 800; margin-top: 8px; }
+    .grid { display: grid; grid-template-columns: 1.35fr .75fr; gap: 12px; align-items: start; }
+    .chart { height: 190px; display: grid; grid-template-columns: repeat(8, 1fr); align-items: end; gap: 8px; margin-top: 16px; }
+    .bar { background: #bfdbfe; border-radius: 6px 6px 0 0; }
+    table { width: 100%; border-collapse: collapse; margin-top: 14px; }
+    th, td { text-align: left; border-bottom: 1px solid var(--line); padding: 10px 8px; font-size: 13px; }
+    th { color: var(--muted); font-size: 11px; text-transform: uppercase; background: #f8fafc; }
+    .tag { display: inline-block; border-radius: 999px; padding: 5px 8px; border: 1px solid var(--line); color: var(--muted); font-size: 12px; }
+    .tag.warn { color: var(--warning); background: #fff7ed; border-color: #fed7aa; }
+    .tag.danger { color: var(--danger); background: #fff1f0; border-color: #fecaca; }
+    .tag.success { color: var(--success); background: #f0fdf4; border-color: #bbf7d0; }
+    .alert { border: 1px solid var(--line); border-radius: 10px; padding: 12px; margin-top: 10px; }
+    .alert strong { display: block; margin-bottom: 4px; }
+    .actions { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 12px; }
+    button { border: 1px solid var(--line); background: white; border-radius: 8px; padding: 8px 10px; font-weight: 700; }
+    button.primary { background: var(--accent); color: white; border-color: var(--accent); }
+    @media (max-width: 840px) {
+      .app { grid-template-columns: 1fr; }
+      .side { display: none; }
+      .main { padding: 14px; }
+      .top { display: block; }
+      .metrics, .grid { grid-template-columns: 1fr; }
+      .card, .panel { box-shadow: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="app" data-eval-artifact="generic-design-skill">
+    <aside class="side">
+      <h1>Edge Command</h1>
+      <a class="active" href="#">Overview</a>
+      <a href="#">Alerts</a>
+      <a href="#">Missions</a>
+      <a href="#">Commands</a>
+      <a href="#">Reports</a>
+    </aside>
+    <main class="main">
+      <header class="top">
+        <div>
+          <h2>Operations Overview</h2>
+          <p>Monitor mission activity, alerts, and command status across edge nodes.</p>
+        </div>
+        <input class="filter" aria-label="Search" value="Search missions and alerts">
+      </header>
+
+      <section class="metrics">
+        <article class="card"><div class="label">Missions</div><div class="value">18</div><span class="tag success">active</span></article>
+        <article class="card"><div class="label">Edge nodes</div><div class="value">42</div><span class="tag warn">6 warning</span></article>
+        <article class="card"><div class="label">Alerts</div><div class="value">9</div><span class="tag danger">critical</span></article>
+        <article class="card"><div class="label">Commands</div><div class="value">31</div><span class="tag">review</span></article>
+      </section>
+
+      <section class="grid">
+        <article class="panel">
+          <h3>Status trend</h3>
+          <div class="chart" aria-label="Status trend chart">
+            <div class="bar" style="height:45%"></div><div class="bar" style="height:62%"></div><div class="bar" style="height:51%"></div><div class="bar" style="height:79%"></div>
+            <div class="bar" style="height:58%"></div><div class="bar" style="height:71%"></div><div class="bar" style="height:66%"></div><div class="bar" style="height:84%"></div>
+          </div>
+          <h3>Recent missions</h3>
+          <table>
+            <thead><tr><th>Mission</th><th>Node</th><th>Status</th><th>Action</th></tr></thead>
+            <tbody>
+              <tr><td>Perimeter sweep</td><td>Node-A17</td><td><span class="tag warn">warning</span></td><td>Review</td></tr>
+              <tr><td>Convoy support</td><td>Node-B04</td><td><span class="tag success">active</span></td><td>Open</td></tr>
+              <tr><td>Sensor reset</td><td>Node-C22</td><td><span class="tag danger">blocked</span></td><td>Details</td></tr>
+            </tbody>
+          </table>
+        </article>
+        <aside class="panel">
+          <h3>Alert detail</h3>
+          <div class="alert"><strong>Critical node alert</strong><span class="label">Node-A17 has elevated mission risk and needs review.</span></div>
+          <div class="alert"><strong>Evidence preview</strong><span class="label">Telemetry and snapshot evidence are attached.</span></div>
+          <div class="alert"><strong>Command review</strong><span class="label">A command can be drafted from this alert.</span></div>
+          <div class="actions">
+            <button class="primary">Acknowledge</button>
+            <button>Escalate</button>
+            <button>Create command</button>
+          </div>
+        </aside>
+      </section>
+    </main>
+  </div>
+</body>
+</html>

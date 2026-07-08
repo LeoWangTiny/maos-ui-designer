@@ -68,6 +68,28 @@ States and operational boundaries: 10/10
 Implementation acceptance checklist: 10/10
 ```
 
+### UI Skill Comparison
+
+The real-page comparison test is available at:
+
+- `docs/comparison/edge-command-ui/README.md`
+
+It compares the same edge-command B2B UI task across three runs:
+
+| Run | Score | Grade |
+| --- | ---: | --- |
+| `control-no-skill` | 64 | fail |
+| `generic-design-skill` | 79 | borderline |
+| `maos-ui-designer` | 100 | marketplace |
+
+Run the comparison evaluator:
+
+```powershell
+python scripts\evaluate_ui_comparison.py docs\comparison\edge-command-ui\control-no-skill --json
+python scripts\evaluate_ui_comparison.py docs\comparison\edge-command-ui\generic-design-skill --json
+python scripts\evaluate_ui_comparison.py docs\comparison\edge-command-ui\maos-ui-designer --json
+```
+
 ## Developer
 
 - Developer: zxztai
