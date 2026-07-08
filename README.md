@@ -9,7 +9,7 @@ It helps Codex clarify product context, select agent-maintainable frontend frame
 Add this repository as a Codex plugin marketplace, then install:
 
 ```powershell
-codex plugin marketplace add <path-or-url-to-this-repo>
+codex plugin marketplace add https://github.com/LeoWangTiny/maos-ui-designer
 codex plugin add maos-ui-designer@maos
 ```
 
